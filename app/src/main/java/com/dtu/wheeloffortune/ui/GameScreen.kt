@@ -1,5 +1,6 @@
 package com.dtu.wheeloffortune.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -29,7 +30,7 @@ class GameScreen {
         Column() {
             StatusLine(lives = gameState.remainingLives, score = gameState.userScore)
             Spacer(modifier = modifier.padding(20.dp))
-            Word(onGuess = { /* TODO */ }, guessedWord = "WORD TO GUESS" /* TODO */)
+            Word(onGuess = { /* TODO */ }, guessedWord = "WORD" /* TODO */)
             Keys(onGuess = { /* TODO */ })
         }
     }
@@ -88,20 +89,19 @@ fun Word(
     guessedWord: String,
     modifier: Modifier = Modifier
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 50.dp),
-        contentPadding = PaddingValues(12.dp),
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
     ) {
-        items(guessedWord.toList()) { c ->
-            CharItem(c)
-        }
+        guessedWord.forEach { c -> CharItem(c = c) }
     }
 }
 
 @Composable
 fun CharItem(c: Char) {
     Button(
-        onClick = { /*TODO*/ },
+        onClick = {},
         elevation = ButtonDefaults.buttonElevation(3.dp),
         colors = ButtonDefaults.buttonColors(
             contentColor = MaterialTheme.colorScheme.primary,
