@@ -36,8 +36,10 @@ class GameScreenViewModel : ViewModel() {
         _uiState.value = GameScreenState(
             currentCategory = getRandomCategory(),
             currentWord = getRandomWord(),
-            guessedWord = getCurrentWordAsBlanks(_uiState.value.currentWord),
             remainingLives = 5
+        )
+        _uiState.value = GameScreenState(
+            guessedWord = getCurrentWordAsBlanks(uiState.value.currentWord),
         )
     }
 }
