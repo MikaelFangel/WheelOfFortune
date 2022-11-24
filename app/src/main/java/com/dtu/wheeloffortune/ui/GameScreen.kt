@@ -1,10 +1,6 @@
 package com.dtu.wheeloffortune.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
@@ -26,12 +22,14 @@ class GameScreen {
         gameScreenViewModel: GameScreenViewModel = GameScreenViewModel(),
         modifier: Modifier = Modifier
     ) {
+
         val gameState by gameScreenViewModel.uiState.collectAsState()
+
         Column() {
             StatusLine(lives = gameState.remainingLives, score = gameState.userScore)
             Spacer(modifier = modifier.padding(20.dp))
-            Word(onGuess = { /* TODO */ }, guessedWord = "WORD" /* TODO */)
-            Keys(onGuess = { /* TODO */ })
+            Word(onGuess = { /* TODO */ }, guessedWord = gameState.guessedWord /* TODO */)
+            Keys(onGuess = { /* TODO */ }, keys = gameState.isKeyGuessed)
         }
     }
 }
@@ -99,9 +97,19 @@ fun Word(
 }
 
 @Composable
-fun CharItem(c: Char) {
+fun Keys(
+    onGuess: (Char) -> Unit,
+    keys: HashMap<Char, Boolean>,
+    modifier: Modifier = Modifier
+) {
+    keys.keys.forEach { c -> CharItem(c = c) }
+}
+
+@Composable
+fun CharItem(c: Char, enabled: Boolean = true) {
     Button(
         onClick = {},
+        enabled = enabled,
         elevation = ButtonDefaults.buttonElevation(3.dp),
         colors = ButtonDefaults.buttonColors(
             contentColor = MaterialTheme.colorScheme.primary,
@@ -113,12 +121,4 @@ fun CharItem(c: Char) {
     ) {
         Text(text = c.uppercaseChar().toString(), fontWeight = FontWeight.Bold)
     }
-}
-
-@Composable
-fun Keys(
-    onGuess: (Char) -> Unit,
-    modifier: Modifier = Modifier
-) {
-
 }
