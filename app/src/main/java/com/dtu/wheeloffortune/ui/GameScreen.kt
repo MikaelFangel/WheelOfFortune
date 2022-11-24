@@ -1,19 +1,23 @@
 package com.dtu.wheeloffortune.ui
 
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Icon
-import androidx.compose.material3.Text
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.dtu.wheeloffortune.GameScreenViewModel
+import com.dtu.wheeloffortune.R
 
 class GameScreen {
     @Composable
@@ -23,15 +27,16 @@ class GameScreen {
     ) {
         val gameState by gameScreenViewModel.uiState.collectAsState()
         Column() {
-            statusLine(lives = gameState.remainingLives, score = gameState.userScore)
-            word(onGuess = { /* TODO */ }, guessedWord = "" /* TODO */)
-            keys(onGuess = { /* TODO */ })
+            StatusLine(lives = gameState.remainingLives, score = gameState.userScore)
+            Spacer(modifier = modifier.padding(20.dp))
+            Word(onGuess = { /* TODO */ }, guessedWord = "WORD TO GUESS" /* TODO */)
+            Keys(onGuess = { /* TODO */ })
         }
     }
 }
 
 @Composable
-fun statusLine(
+fun StatusLine(
     lives: Int,
     score: Int,
     modifier: Modifier = Modifier
@@ -45,47 +50,73 @@ fun statusLine(
                 .padding(paddingValues)
         ) {
             Row() {
-                userLives(lives = lives)
+                UserLives(lives = lives)
             }
         }
         Column(modifier = modifier.padding(paddingValues)) {
-            userScore(score = score)
+            UserScore(score = score)
         }
     }
 }
 
 @Composable
-fun userLives(
+fun UserLives(
     lives: Int,
     modifier: Modifier = Modifier
 ) {
     for (i in 0 until lives) {
         Icon(
-            Icons.Rounded.Favorite, contentDescription = null
+            Icons.Rounded.Favorite,
+            contentDescription = null,
+            tint = Color(233, 30, 99, 255)
         )
 
     }
 }
 
 @Composable
-fun userScore(
+fun UserScore(
     score: Int,
     modifier: Modifier = Modifier
 ) {
-    Text(text = "Score: $score")
+    Text(text = stringResource(id = R.string.score) + ": $score")
 }
 
 @Composable
-fun word(
+fun Word(
     onGuess: (Char) -> Unit,
     guessedWord: String,
     modifier: Modifier = Modifier
 ) {
-
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(minSize = 50.dp),
+        contentPadding = PaddingValues(12.dp),
+    ) {
+        items(guessedWord.toList()) { c ->
+            CharItem(c)
+        }
+    }
 }
 
 @Composable
-fun keys(
+fun CharItem(c: Char) {
+    Button(
+        onClick = { /*TODO*/ },
+        elevation = ButtonDefaults.buttonElevation(3.dp),
+        colors = ButtonDefaults.buttonColors(
+            contentColor = MaterialTheme.colorScheme.primary,
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        shape = ShapeDefaults.Small,
+        contentPadding = PaddingValues(0.dp),
+        modifier = Modifier.padding(5.dp)
+    ) {
+        Text(text = c.uppercaseChar().toString(), fontWeight = FontWeight.Bold)
+    }
+}
+
+@Composable
+fun Keys(
     onGuess: (Char) -> Unit,
     modifier: Modifier = Modifier
 ) {

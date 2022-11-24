@@ -20,11 +20,11 @@ class GameScreenViewModel : ViewModel() {
     }
 
     private fun getRandomCategory(): String {
-        return ""
+        return "TestCat"
     }
 
     private fun getRandomWord(): String {
-        return ""
+        return "TestWord"
     }
 
     private fun getCurrentWordAsBlanks(word: String): String {

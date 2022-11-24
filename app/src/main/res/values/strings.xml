@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WheelOfFortune</string>
+
+    <string name="score">Score</string>
 </resources>
