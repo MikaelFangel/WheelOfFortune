@@ -102,7 +102,13 @@ fun Keys(
     keys: HashMap<Char, Boolean>,
     modifier: Modifier = Modifier
 ) {
-    keys.keys.forEach { c -> CharItem(c = c) }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        keys.forEach { (c, b) -> CharItem(c = c, enabled = b) }
+    }
 }
 
 @Composable
