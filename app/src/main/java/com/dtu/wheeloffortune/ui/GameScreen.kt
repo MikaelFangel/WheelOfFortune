@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateMap
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -104,15 +105,13 @@ fun Keys(
     keys: SnapshotStateMap<Char, Boolean>,
     modifier: Modifier = Modifier
 ) {
+    // TODO Find more generic way of solving this
     val ranges = listOf(
-        'a'..'e',
-        'f'..'j',
-        'k'..'o',
-        'p'..'t',
-        'u'..'y',
-        'z'..'z'
+        'a'..'i',
+        'j'..'q',
+        's'..'y',
     )
-    for (i in 0..5) {
+    for (i in 0 until 3) {
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -127,7 +126,12 @@ fun Keys(
 }
 
 @Composable
-fun CharItem(c: Char, enabled: Boolean = true, onGuess: () -> Unit = {}) {
+fun CharItem(
+    c: Char,
+    enabled: Boolean = true,
+    modifier: Modifier = Modifier,
+    onGuess: () -> Unit = {},
+) {
     Button(
         onClick = onGuess,
         enabled = enabled,
@@ -138,7 +142,10 @@ fun CharItem(c: Char, enabled: Boolean = true, onGuess: () -> Unit = {}) {
         ),
         shape = ShapeDefaults.Small,
         contentPadding = PaddingValues(0.dp),
-        modifier = Modifier.padding(5.dp)
+        modifier = modifier
+            .padding(5.dp)
+            .height(30.dp)
+            .width(30.dp)
     ) {
         Text(text = c.uppercaseChar().toString(), fontWeight = FontWeight.Bold)
     }
