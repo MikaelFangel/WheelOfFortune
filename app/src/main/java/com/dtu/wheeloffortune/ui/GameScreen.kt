@@ -1,14 +1,13 @@
 package com.dtu.wheeloffortune.ui
 
-import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,36 +21,49 @@ import com.dtu.wheeloffortune.R
 class GameScreen {
     @Composable
     fun gameScreen(
-        gameScreenViewModel: GameScreenViewModel = GameScreenViewModel(),
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
+        gameScreenViewModel: GameScreenViewModel = GameScreenViewModel()
     ) {
 
         val gameState by gameScreenViewModel.uiState.collectAsState()
 
-        Column() {
+        Column {
             StatusLine(lives = gameState.remainingLives, score = gameState.userScore)
             Spacer(modifier = modifier.padding(20.dp))
-            Word(onGuess = { /* TODO */ }, guessedWord = gameState.guessedWord /* TODO */)
-            Keys(onGuess = { /* TODO */ }, keys = gameState.newTest)
+            Word(guessedWord = gameState.guessedWord) {
+                /* TODO */
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(vertical = 10.dp),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                Column {
+                    Keys(keys = gameState.newTest) {
+                        /* TODO */
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
 fun StatusLine(
+    modifier: Modifier = Modifier,
     lives: Int,
-    score: Int,
-    modifier: Modifier = Modifier
+    score: Int
 ) {
     val paddingValues = 12.dp
 
-    Row() {
+    Row {
         Column(
             modifier = Modifier
                 .weight(1f)
                 .padding(paddingValues)
         ) {
-            Row() {
+            Row {
                 UserLives(lives = lives)
             }
         }
@@ -63,8 +75,8 @@ fun StatusLine(
 
 @Composable
 fun UserLives(
-    lives: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    lives: Int
 ) {
     for (i in 0 until lives) {
         Icon(
@@ -78,17 +90,17 @@ fun UserLives(
 
 @Composable
 fun UserScore(
-    score: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    score: Int
 ) {
     Text(text = stringResource(id = R.string.score) + ": $score")
 }
 
 @Composable
 fun Word(
-    onGuess: (Char) -> Unit,
+    modifier: Modifier = Modifier,
     guessedWord: String,
-    modifier: Modifier = Modifier
+    onGuess: (Char) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -101,9 +113,9 @@ fun Word(
 
 @Composable
 fun Keys(
-    onGuess: (Char) -> Unit,
+    modifier: Modifier = Modifier,
     keys: SnapshotStateMap<Char, Boolean>,
-    modifier: Modifier = Modifier
+    onGuess: (Char) -> Unit
 ) {
     // TODO Find more generic way of solving this
     val ranges = listOf(
@@ -118,7 +130,7 @@ fun Keys(
             horizontalArrangement = Arrangement.Center
         ) {
             for (j in ranges[i])
-                CharItem(j, keys[j] == true) {
+                CharItem(c = j, enabled = keys[j] == true) {
                     keys[j] = false
                 }
         }
@@ -127,9 +139,9 @@ fun Keys(
 
 @Composable
 fun CharItem(
+    modifier: Modifier = Modifier,
     c: Char,
     enabled: Boolean = true,
-    modifier: Modifier = Modifier,
     onGuess: () -> Unit = {},
 ) {
     Button(
