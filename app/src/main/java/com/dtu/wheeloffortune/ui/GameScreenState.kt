@@ -1,5 +1,8 @@
 package com.dtu.wheeloffortune.ui
 
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.snapshots.SnapshotStateMap
+
 data class GameScreenState(
     val remainingLives: Int = 5,
 
@@ -8,5 +11,5 @@ data class GameScreenState(
     val guessedWord: String = "",
 
     val userScore: Int = 0,
-    val isKeyGuessed: HashMap<Char, Boolean> = HashMap()
+    val newTest: SnapshotStateMap<Char, Boolean> = mutableStateMapOf()
 )

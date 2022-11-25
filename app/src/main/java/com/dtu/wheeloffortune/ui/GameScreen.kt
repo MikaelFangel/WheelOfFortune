@@ -1,13 +1,15 @@
 package com.dtu.wheeloffortune.ui
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -29,7 +31,7 @@ class GameScreen {
             StatusLine(lives = gameState.remainingLives, score = gameState.userScore)
             Spacer(modifier = modifier.padding(20.dp))
             Word(onGuess = { /* TODO */ }, guessedWord = gameState.guessedWord /* TODO */)
-            Keys(onGuess = { /* TODO */ }, keys = gameState.isKeyGuessed)
+            Keys(onGuess = { /* TODO */ }, keys = gameState.newTest)
         }
     }
 }
@@ -99,22 +101,35 @@ fun Word(
 @Composable
 fun Keys(
     onGuess: (Char) -> Unit,
-    keys: HashMap<Char, Boolean>,
+    keys: SnapshotStateMap<Char, Boolean>,
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        keys.forEach { (c, b) -> CharItem(c = c, enabled = b) }
+    val ranges = listOf(
+        'a'..'e',
+        'f'..'j',
+        'k'..'o',
+        'p'..'t',
+        'u'..'y',
+        'z'..'z'
+    )
+    for (i in 0..5) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            for (j in ranges[i])
+                CharItem(j, keys[j] == true) {
+                    keys[j] = false
+                }
+        }
     }
 }
 
 @Composable
-fun CharItem(c: Char, enabled: Boolean = true) {
+fun CharItem(c: Char, enabled: Boolean = true, onGuess: () -> Unit = {}) {
     Button(
-        onClick = {},
+        onClick = onGuess,
         enabled = enabled,
         elevation = ButtonDefaults.buttonElevation(3.dp),
         colors = ButtonDefaults.buttonColors(
