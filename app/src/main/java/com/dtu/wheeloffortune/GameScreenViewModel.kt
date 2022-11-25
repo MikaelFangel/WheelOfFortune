@@ -16,7 +16,7 @@ class GameScreenViewModel : ViewModel() {
 
     private fun initializeKeys() {
         for (c in 'a'..'z')
-            _uiState.value.isKeyGuessed[c] = true
+            _uiState.value.newTest[c] = true
     }
 
     private fun getRandomCategory(): String {
