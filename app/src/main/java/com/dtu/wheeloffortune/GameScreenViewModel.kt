@@ -16,7 +16,7 @@ class GameScreenViewModel : ViewModel() {
 
     private fun initializeKeys() {
         for (c in 'a'..'z')
-            _uiState.value.isKeyGuessed[c] = false
+            _uiState.value.isKeyGuessed[c] = true
     }
 
     private fun getRandomCategory(): String {
@@ -32,14 +32,13 @@ class GameScreenViewModel : ViewModel() {
     }
 
     private fun resetGame() {
-        initializeKeys()
+        val randomWordTemp = getRandomWord()
         _uiState.value = GameScreenState(
             currentCategory = getRandomCategory(),
-            currentWord = getRandomWord(),
+            currentWord = randomWordTemp,
+            guessedWord = getCurrentWordAsBlanks(randomWordTemp),
             remainingLives = 5
         )
-        _uiState.value = GameScreenState(
-            guessedWord = getCurrentWordAsBlanks(uiState.value.currentWord),
-        )
+        initializeKeys()
     }
 }
