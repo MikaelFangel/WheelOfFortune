@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">WheelOfFortune</string>
+    <string name="app_name">s215797 Lykkehjulet</string>
+
+    <string name="start_game">Start Game</string>
 
     <string name="score">Score</string>
 </resources>
