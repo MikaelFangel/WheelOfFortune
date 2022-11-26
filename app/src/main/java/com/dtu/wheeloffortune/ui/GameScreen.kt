@@ -31,9 +31,7 @@ fun GameScreen(
     Column {
         StatusLine(lives = gameState.remainingLives, score = gameState.userScore)
         Spacer(modifier = modifier.padding(20.dp))
-        Word(guessedWord = gameState.guessedWord) {
-            /* TODO */
-        }
+        Word(guessedWord = gameState.guessedWord)
         Box(
             modifier = Modifier
                 .fillMaxHeight()
@@ -100,7 +98,6 @@ fun UserScore(
 fun Word(
     modifier: Modifier = Modifier,
     guessedWord: String,
-    onGuess: (Char) -> Unit
 ) {
     Row(
         modifier = Modifier
