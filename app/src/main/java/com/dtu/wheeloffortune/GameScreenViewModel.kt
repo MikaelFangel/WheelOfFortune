@@ -44,7 +44,14 @@ class GameScreenViewModel : ViewModel() {
                 tempString[i] = c
 
             _uiState.update { wordState -> wordState.copy(guessedWord = tempString.toString()) }
+        } else {
+            _uiState.update { state -> state.copy(remainingLives = uiState.value.remainingLives - 1) }
+            checkIfGameLost()
         }
+    }
+
+    private fun checkIfGameLost(): Boolean {
+        return uiState.value.remainingLives <= 0
     }
 
     private fun getIndexesOfLetters(c: Char): List<Int> {
