@@ -1,8 +1,7 @@
-package com.dtu.wheeloffortune
+package com.dtu.wheeloffortune.ui
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.dtu.wheeloffortune.ui.GameScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -45,13 +44,17 @@ class GameScreenViewModel : ViewModel() {
 
             _uiState.update { wordState -> wordState.copy(guessedWord = tempString.toString()) }
         } else {
-            _uiState.update { state -> state.copy(remainingLives = uiState.value.remainingLives - 1) }
-            checkIfGameLost()
+            _uiState.update { state ->
+                state.copy(
+                    remainingLives = uiState.value.remainingLives - 1,
+                    gameEnded = checkIfGameLost()
+                )
+            }
         }
     }
 
     private fun checkIfGameLost(): Boolean {
-        return uiState.value.remainingLives <= 0
+        return uiState.value.remainingLives <= 1
     }
 
     private fun getIndexesOfLetters(c: Char): List<Int> {

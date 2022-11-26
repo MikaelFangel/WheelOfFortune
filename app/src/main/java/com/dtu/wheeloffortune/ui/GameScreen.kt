@@ -16,15 +16,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.dtu.wheeloffortune.GameScreenViewModel
 import com.dtu.wheeloffortune.R
 
 @Composable
 fun GameScreen(
     modifier: Modifier = Modifier,
-    gameScreenViewModel: GameScreenViewModel = viewModel()
+    gameScreenViewModel: GameScreenViewModel = viewModel(),
+    onGameEnded: () -> Unit
 ) {
     val gameState by gameScreenViewModel.uiState.collectAsState()
+    if (gameState.gameEnded)
+        onGameEnded()
 
     Column {
         StatusLine(lives = gameState.remainingLives, score = gameState.userScore)
