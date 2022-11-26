@@ -1,5 +1,6 @@
 package com.dtu.wheeloffortune.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
@@ -41,7 +42,10 @@ class GameScreen {
             ) {
                 Column {
                     Keys(keys = gameState.newTest) {
-                        /* TODO */
+                        Log.d(
+                            "On Key Press",
+                            keyPress(it, gameState.currentWord, gameState.guessedWord)
+                        )
                     }
                 }
             }
@@ -121,7 +125,7 @@ fun Keys(
     val ranges = listOf(
         'a'..'i',
         'j'..'q',
-        's'..'y',
+        'r'..'z',
     )
     for (i in 0 until 3) {
         Row(
@@ -131,10 +135,28 @@ fun Keys(
         ) {
             for (j in ranges[i])
                 CharItem(c = j, enabled = keys[j] == true) {
+                    onGuess(j)
                     keys[j] = false
                 }
         }
     }
+}
+
+fun keyPress(c: Char, originalWord: String, currentWord: String): String {
+    val indexes = getIndexesOfLetters(c, originalWord)
+    val tempString = StringBuilder(currentWord)
+    for (i in indexes)
+        tempString[i] = c
+
+    return tempString.toString()
+}
+
+fun getIndexesOfLetters(c: Char, originalWord: String): List<Int> {
+    return originalWord
+        .lowercase()
+        .withIndex()
+        .filter { it.value == c }
+        .map { it.index }
 }
 
 @Composable
