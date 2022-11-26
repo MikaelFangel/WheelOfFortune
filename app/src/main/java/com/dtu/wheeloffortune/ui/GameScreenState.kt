@@ -5,6 +5,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateMap
 
 data class GameScreenState(
     val remainingLives: Int = 5,
+    val gameEnded: Boolean = false,
 
     val currentCategory: String = "",
     val currentWord: String = "",
