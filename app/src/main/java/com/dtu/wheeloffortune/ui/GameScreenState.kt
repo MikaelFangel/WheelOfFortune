@@ -11,5 +11,5 @@ data class GameScreenState(
     val guessedWord: String = "",
 
     val userScore: Int = 0,
-    val newTest: SnapshotStateMap<Char, Boolean> = mutableStateMapOf()
+    val isKeyGuessed: SnapshotStateMap<Char, Boolean> = mutableStateMapOf()
 )

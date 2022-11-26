@@ -1,6 +1,5 @@
 package com.dtu.wheeloffortune.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
@@ -16,37 +15,32 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dtu.wheeloffortune.GameScreenViewModel
 import com.dtu.wheeloffortune.R
 
-class GameScreen {
-    @Composable
-    fun gameScreen(
-        modifier: Modifier = Modifier,
-        gameScreenViewModel: GameScreenViewModel = GameScreenViewModel()
-    ) {
+@Composable
+fun GameScreen(
+    modifier: Modifier = Modifier,
+    gameScreenViewModel: GameScreenViewModel = viewModel()
+) {
+    val gameState by gameScreenViewModel.uiState.collectAsState()
 
-        val gameState by gameScreenViewModel.uiState.collectAsState()
-
-        Column {
-            StatusLine(lives = gameState.remainingLives, score = gameState.userScore)
-            Spacer(modifier = modifier.padding(20.dp))
-            Word(guessedWord = gameState.guessedWord) {
-                /* TODO */
-            }
-            Box(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(vertical = 10.dp),
-                contentAlignment = Alignment.BottomCenter
-            ) {
-                Column {
-                    Keys(keys = gameState.newTest) {
-                        Log.d(
-                            "On Key Press",
-                            keyPress(it, gameState.currentWord, gameState.guessedWord)
-                        )
-                    }
+    Column {
+        StatusLine(lives = gameState.remainingLives, score = gameState.userScore)
+        Spacer(modifier = modifier.padding(20.dp))
+        Word(guessedWord = gameState.guessedWord) {
+            /* TODO */
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .padding(vertical = 10.dp),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            Column {
+                Keys(keys = gameState.isKeyGuessed) {
+                    gameScreenViewModel.keyPress(it)
                 }
             }
         }
@@ -136,27 +130,9 @@ fun Keys(
             for (j in ranges[i])
                 CharItem(c = j, enabled = keys[j] == true) {
                     onGuess(j)
-                    keys[j] = false
                 }
         }
     }
-}
-
-fun keyPress(c: Char, originalWord: String, currentWord: String): String {
-    val indexes = getIndexesOfLetters(c, originalWord)
-    val tempString = StringBuilder(currentWord)
-    for (i in indexes)
-        tempString[i] = c
-
-    return tempString.toString()
-}
-
-fun getIndexesOfLetters(c: Char, originalWord: String): List<Int> {
-    return originalWord
-        .lowercase()
-        .withIndex()
-        .filter { it.value == c }
-        .map { it.index }
 }
 
 @Composable
