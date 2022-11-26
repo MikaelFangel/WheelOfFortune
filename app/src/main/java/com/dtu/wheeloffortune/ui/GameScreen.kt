@@ -153,7 +153,7 @@ fun CharItem(
         contentPadding = PaddingValues(0.dp),
         modifier = modifier
             .padding(5.dp)
-            .height(30.dp)
+            .height(50.dp)
             .width(30.dp)
     ) {
         Text(text = c.uppercaseChar().toString(), fontWeight = FontWeight.Bold)
