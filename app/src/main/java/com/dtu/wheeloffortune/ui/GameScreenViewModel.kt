@@ -26,16 +26,18 @@ class GameScreenViewModel : ViewModel() {
 
     private fun getRandomCategory(): String {
         val cats = categories.keys.toList()
-        return cats.random()
+        return cats.random(Random(System.currentTimeMillis()))
     }
 
     private fun getRandomWord(category: String): String {
         val words = categories[category]
-        return words?.random().toString()
+        return words?.random(Random(System.currentTimeMillis())).toString()
     }
 
     private fun getCurrentWordAsBlanks(word: String): String {
-        return word.replace("[a-zA-Z]".toRegex(), " ")
+        return word
+            .replace(" ", "_")
+            .replace("[a-zA-Z]".toRegex(), " ")
     }
 
     fun keyPress(c: Char) {
@@ -70,9 +72,9 @@ class GameScreenViewModel : ViewModel() {
     }
 
     private fun checkIfGameWon(guessedWord: String): Boolean {
-        return uiState.value.currentWord.lowercase(Locale.getDefault()) == guessedWord.lowercase(
-            Locale.getDefault()
-        )
+        return uiState.value.currentWord
+            .lowercase(Locale.getDefault())
+            .replace(" ", "_") == guessedWord.lowercase(Locale.getDefault())
     }
 
     private fun getIndexesOfLetters(c: Char): List<Int> {

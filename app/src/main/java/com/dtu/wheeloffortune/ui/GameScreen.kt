@@ -118,12 +118,17 @@ fun Word(
     modifier: Modifier = Modifier,
     guessedWord: String,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        guessedWord.forEach { c -> CharItem(c = c) }
+    val lines = guessedWord.split("_")
+
+    for (line in lines) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        )
+        {
+            line.forEach { c -> CharItem(c = c) }
+        }
     }
 }
 
