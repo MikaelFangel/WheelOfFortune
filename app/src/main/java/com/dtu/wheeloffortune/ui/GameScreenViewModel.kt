@@ -1,11 +1,13 @@
 package com.dtu.wheeloffortune.ui
 
 import android.util.Log
+import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import java.util.*
 import kotlin.random.Random
 
 class GameScreenViewModel : ViewModel() {
@@ -47,7 +49,8 @@ class GameScreenViewModel : ViewModel() {
                 wordState.copy(
                     guessedWord = tempString.toString(),
                     userScore = uiState.value.userScore +
-                            uiState.value.wheelScore * indexes.size
+                            uiState.value.wheelScore * indexes.size,
+                    gameEnded = checkIfGameWon(tempString.toString())
                 )
             }
         } else {
@@ -62,6 +65,12 @@ class GameScreenViewModel : ViewModel() {
 
     private fun checkIfGameLost(): Boolean {
         return uiState.value.remainingLives <= 1
+    }
+
+    private fun checkIfGameWon(guessedWord: String): Boolean {
+        return uiState.value.currentWord.lowercase(Locale.getDefault()) == guessedWord.lowercase(
+            Locale.getDefault()
+        )
     }
 
     private fun getIndexesOfLetters(c: Char): List<Int> {
