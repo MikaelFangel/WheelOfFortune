@@ -2,14 +2,30 @@ package com.dtu.wheeloffortune.ui
 
 val titleList = listOf(
     "Frost",
-    "Aladdin"
+    "Aladdin",
+    "Top Gun",
+    "Avatar",
+    "Bohemian Rapsody",
+    "Harry Potter",
+    "Dune",
+    "The Lord of the Rings"
 )
 
 val animalList = listOf(
     "Dog",
     "Rabbit",
     "Cat",
-    "Elephant"
+    "Elephant",
+    "Seagul",
+    "Baboon",
+    "Bear",
+    "Beaver",
+    "Cockroach",
+    "Jackall",
+    "Langur",
+    "Sea Otter",
+    "Zebra"
+
 )
 
 val placeList = listOf(
@@ -17,11 +33,17 @@ val placeList = listOf(
     "Bruxelles",
     "Amsterdam",
     "Odense",
-    "The Moon"
+    "The Moon",
+    "Mordor",
 )
 
 val nameList = listOf(
-    "Lars Von Trier"
+    "Lars Von Trier",
+    "Kayne West",
+    "Donald Trump",
+    "Elon Musk",
+    "Mette Frederiksen",
+    "Mads Mikkelsen",
 )
 
 val categories =
