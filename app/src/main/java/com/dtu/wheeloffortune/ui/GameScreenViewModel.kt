@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlin.random.Random
 
 class GameScreenViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(GameScreenState())
@@ -72,7 +73,9 @@ class GameScreenViewModel : ViewModel() {
     }
 
     fun spinWheel(): Int {
-        return 100
+        val wheelValues =
+            listOf(3000, 1250, 800, 500, 500, 500, 500, 100, 800, 800, 1000, 1500, 600)
+        return wheelValues.random(Random(System.currentTimeMillis()))
     }
 
     private fun resetGame() {
