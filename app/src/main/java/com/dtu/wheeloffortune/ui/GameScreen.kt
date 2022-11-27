@@ -33,7 +33,24 @@ fun GameScreen(
     Column {
         StatusLine(lives = gameState.remainingLives, score = gameState.userScore)
         Spacer(modifier = modifier.padding(20.dp))
+        Row(
+            Modifier
+                .padding(
+                    horizontal = 12.dp
+                )
+        ) {
+            Text(
+                text = stringResource(id = R.string.current_cat) +
+                        ": ${gameState.currentCategory}"
+            )
+        }
         Word(guessedWord = gameState.guessedWord)
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            Text(
+                text = stringResource(id = R.string.current_letter_value) +
+                        ": ${gameState.wheelScore}"
+            )
+        }
         Box(
             modifier = Modifier
                 .fillMaxHeight()
