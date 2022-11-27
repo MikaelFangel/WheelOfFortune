@@ -6,4 +6,5 @@
     <string name="score">Score</string>
     <string name="current_cat">Category</string>
     <string name="current_letter_value">A Letter is Worth</string>
+    <string name="spin_wheel">Spin the Wheel</string>
 </resources>

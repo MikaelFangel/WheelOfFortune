@@ -58,6 +58,14 @@ fun GameScreen(
             contentAlignment = Alignment.BottomCenter
         ) {
             Column {
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Button(onClick = { gameScreenViewModel.spinWheel() }) {
+                        Text(text = stringResource(id = R.string.spin_wheel))
+                    }
+                }
                 Keys(keys = gameState.isKeyGuessed) {
                     gameScreenViewModel.keyPress(it)
                 }

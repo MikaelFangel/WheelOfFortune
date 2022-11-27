@@ -85,10 +85,15 @@ class GameScreenViewModel : ViewModel() {
             .map { it.index }
     }
 
-    fun spinWheel(): Int {
+    fun spinWheel() {
         val wheelValues =
             listOf(3000, 1250, 800, 500, 500, 500, 500, 100, 800, 800, 1000, 1500, 600)
-        return wheelValues.random(Random(System.currentTimeMillis()))
+
+        _uiState.update { state ->
+            state.copy(
+                wheelScore = wheelValues.random(Random(System.currentTimeMillis()))
+            )
+        }
     }
 
     private fun resetGame() {
@@ -99,8 +104,8 @@ class GameScreenViewModel : ViewModel() {
             currentWord = randomWordTemp,
             guessedWord = getCurrentWordAsBlanks(randomWordTemp),
             remainingLives = 5,
-            wheelScore = spinWheel()
         )
+        spinWheel()
         initializeKeys()
     }
 }
