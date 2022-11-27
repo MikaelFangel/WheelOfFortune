@@ -54,14 +54,20 @@ class GameScreenViewModel : ViewModel() {
                     guessedWord = tempString.toString(),
                     userScore = uiState.value.userScore +
                             uiState.value.wheelScore * indexes.size,
-                    gameEnded = checkIfGameWon(tempString.toString())
+                    gameStatus = if (checkIfGameWon(tempString.toString()))
+                        GameCycle.Won
+                    else
+                        GameCycle.Spinning
                 )
             }
         } else {
             _uiState.update { state ->
                 state.copy(
                     remainingLives = uiState.value.remainingLives - 1,
-                    gameEnded = checkIfGameLost()
+                    gameStatus = if (checkIfGameLost())
+                        GameCycle.Lost
+                    else
+                        GameCycle.Spinning
                 )
             }
         }
@@ -91,7 +97,8 @@ class GameScreenViewModel : ViewModel() {
 
         _uiState.update { state ->
             state.copy(
-                wheelScore = wheelValues.random(Random(System.currentTimeMillis()))
+                wheelScore = wheelValues.random(Random(System.currentTimeMillis())),
+                gameStatus = GameCycle.Guessing
             )
         }
     }

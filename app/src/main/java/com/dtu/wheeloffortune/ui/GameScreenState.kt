@@ -3,9 +3,16 @@ package com.dtu.wheeloffortune.ui
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 
+enum class GameCycle() {
+    Spinning,
+    Guessing,
+    Won,
+    Lost
+}
+
 data class GameScreenState(
     val remainingLives: Int = 5,
-    val gameEnded: Boolean = false,
+    val gameStatus: GameCycle = GameCycle.Guessing,
 
     val currentCategory: String = "",
     val currentWord: String = "",
