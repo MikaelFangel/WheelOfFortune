@@ -1,7 +1,5 @@
 package com.dtu.wheeloffortune.ui
 
-import android.util.Log
-import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +13,6 @@ class GameScreenViewModel : ViewModel() {
     val uiState: StateFlow<GameScreenState> = _uiState.asStateFlow()
 
     init {
-        Log.d("Init", "The viewModel have been init")
         resetGame()
     }
 
@@ -103,7 +100,7 @@ class GameScreenViewModel : ViewModel() {
         }
     }
 
-    private fun resetGame() {
+    fun resetGame() {
         val catTemp = getRandomCategory()
         val randomWordTemp = getRandomWord(catTemp)
         _uiState.value = GameScreenState(

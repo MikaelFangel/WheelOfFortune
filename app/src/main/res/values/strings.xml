@@ -7,4 +7,11 @@
     <string name="current_cat">Category</string>
     <string name="current_letter_value">A Letter is Worth</string>
     <string name="spin_wheel">Spin the Wheel</string>
+    <string name="game_won">You Have Won</string>
+    <string name="game_lost">You Have Lost</string>
+    <string name="your_score">Your Score</string>
+    <string name="the_cat">The Category Was</string>
+    <string name="the_word">The Word Was</string>
+    <string name="end_game">End Game</string>
+    <string name="play_again">Play Again</string>
 </resources>

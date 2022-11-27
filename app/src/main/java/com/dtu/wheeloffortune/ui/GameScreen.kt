@@ -1,6 +1,5 @@
 package com.dtu.wheeloffortune.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
@@ -25,12 +24,36 @@ import com.dtu.wheeloffortune.ui.theme.WheelOfFortuneTheme
 fun GameScreen(
     modifier: Modifier = Modifier,
     gameScreenViewModel: GameScreenViewModel = viewModel(),
-    onGameEnded: () -> Unit
 ) {
     val gameState by gameScreenViewModel.uiState.collectAsState()
-    Log.d("Status", gameState.gameStatus.toString())
     if (gameState.gameStatus == GameCycle.Won || gameState.gameStatus == GameCycle.Lost)
-        onGameEnded()
+        AlertDialog(
+            title = {
+                if (gameState.gameStatus == GameCycle.Won)
+                    Text(text = stringResource(id = R.string.game_won))
+                else
+                    Text(text = stringResource(id = R.string.game_lost))
+            },
+            text = {
+                Text(
+                    text =
+                    stringResource(id = R.string.your_score) + ": ${gameState.userScore}\n" +
+                            stringResource(id = R.string.the_cat) + ": ${gameState.currentCategory}\n" +
+                            stringResource(id = R.string.the_word) + ": ${gameState.currentWord}"
+                )
+            },
+            onDismissRequest = {},
+            dismissButton = {
+                OutlinedButton(onClick = { /*TODO*/ }) {
+                    Text(text = stringResource(id = R.string.end_game))
+                }
+            },
+            confirmButton = {
+                Button(onClick = { gameScreenViewModel.resetGame() }) {
+                    Text(text = stringResource(id = R.string.play_again))
+                }
+            }
+        )
 
     Column {
         StatusLine(lives = gameState.remainingLives, score = gameState.userScore)
@@ -205,8 +228,6 @@ fun CharItem(
 @Composable
 fun GameScreenPreview() {
     WheelOfFortuneTheme() {
-        GameScreen(gameScreenViewModel = GameScreenViewModel()) {
-            {}
-        }
+        GameScreen(gameScreenViewModel = GameScreenViewModel())
     }
 }
