@@ -16,13 +16,13 @@ val animalList = listOf(
     "Rabbit",
     "Cat",
     "Elephant",
-    "Seagul",
+    "Seagull",
     "Baboon",
     "Bear",
     "Beaver",
     "Cockroach",
-    "Jackall",
-    "Langur",
+    "Jackal",
+    "Languor",
     "Sea Otter",
     "Zebra"
 
