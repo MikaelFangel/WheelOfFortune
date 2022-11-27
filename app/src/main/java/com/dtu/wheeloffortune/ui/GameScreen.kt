@@ -1,5 +1,6 @@
 package com.dtu.wheeloffortune.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
@@ -27,7 +28,8 @@ fun GameScreen(
     onGameEnded: () -> Unit
 ) {
     val gameState by gameScreenViewModel.uiState.collectAsState()
-    if (gameState.gameEnded)
+    Log.d("Status", gameState.gameStatus.toString())
+    if (gameState.gameStatus == GameCycle.Won || gameState.gameStatus == GameCycle.Lost)
         onGameEnded()
 
     Column {
@@ -62,11 +64,17 @@ fun GameScreen(
                     Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Button(onClick = { gameScreenViewModel.spinWheel() }) {
+                    Button(
+                        onClick = { gameScreenViewModel.spinWheel() },
+                        enabled = gameState.gameStatus == GameCycle.Spinning
+                    ) {
                         Text(text = stringResource(id = R.string.spin_wheel))
                     }
                 }
-                Keys(keys = gameState.isKeyGuessed) {
+                Keys(
+                    keys = gameState.isKeyGuessed,
+                    enabled = gameState.gameStatus == GameCycle.Guessing
+                ) {
                     gameScreenViewModel.keyPress(it)
                 }
             }
@@ -144,6 +152,7 @@ fun Word(
 fun Keys(
     modifier: Modifier = Modifier,
     keys: SnapshotStateMap<Char, Boolean>,
+    enabled: Boolean = true,
     onGuess: (Char) -> Unit
 ) {
     // TODO Find more generic way of solving this
@@ -159,7 +168,7 @@ fun Keys(
             horizontalArrangement = Arrangement.Center
         ) {
             for (j in ranges[i])
-                CharItem(c = j, enabled = keys[j] == true) {
+                CharItem(c = j, enabled = keys[j] == true && enabled) {
                     onGuess(j)
                 }
         }
