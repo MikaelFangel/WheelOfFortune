@@ -14,9 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dtu.wheeloffortune.R
+import com.dtu.wheeloffortune.ui.theme.WheelOfFortuneTheme
 
 @Composable
 fun GameScreen(
@@ -157,5 +159,15 @@ fun CharItem(
             .width(30.dp)
     ) {
         Text(text = c.uppercaseChar().toString(), fontWeight = FontWeight.Bold)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun GameScreenPreview() {
+    WheelOfFortuneTheme() {
+        GameScreen(gameScreenViewModel = GameScreenViewModel()) {
+            {}
+        }
     }
 }
