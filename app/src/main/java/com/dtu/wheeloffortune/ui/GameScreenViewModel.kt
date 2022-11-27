@@ -42,7 +42,13 @@ class GameScreenViewModel : ViewModel() {
             for (i in indexes)
                 tempString[i] = c
 
-            _uiState.update { wordState -> wordState.copy(guessedWord = tempString.toString()) }
+            _uiState.update { wordState ->
+                wordState.copy(
+                    guessedWord = tempString.toString(),
+                    userScore = uiState.value.userScore +
+                            uiState.value.wheelScore * indexes.size
+                )
+            }
         } else {
             _uiState.update { state ->
                 state.copy(
@@ -65,13 +71,18 @@ class GameScreenViewModel : ViewModel() {
             .map { it.index }
     }
 
+    fun spinWheel(): Int {
+        return 100
+    }
+
     private fun resetGame() {
         val randomWordTemp = getRandomWord()
         _uiState.value = GameScreenState(
             currentCategory = getRandomCategory(),
             currentWord = randomWordTemp,
             guessedWord = getCurrentWordAsBlanks(randomWordTemp),
-            remainingLives = 5
+            remainingLives = 5,
+            wheelScore = spinWheel()
         )
         initializeKeys()
     }
