@@ -25,11 +25,13 @@ class GameScreenViewModel : ViewModel() {
     }
 
     private fun getRandomCategory(): String {
-        return "TestCat"
+        val cats = categories.keys.toList()
+        return cats.random()
     }
 
-    private fun getRandomWord(): String {
-        return "TestWord"
+    private fun getRandomWord(category: String): String {
+        val words = categories[category]
+        return words?.random().toString()
     }
 
     private fun getCurrentWordAsBlanks(word: String): String {
@@ -88,9 +90,10 @@ class GameScreenViewModel : ViewModel() {
     }
 
     private fun resetGame() {
-        val randomWordTemp = getRandomWord()
+        val catTemp = getRandomCategory()
+        val randomWordTemp = getRandomWord(catTemp)
         _uiState.value = GameScreenState(
-            currentCategory = getRandomCategory(),
+            currentCategory = catTemp,
             currentWord = randomWordTemp,
             guessedWord = getCurrentWordAsBlanks(randomWordTemp),
             remainingLives = 5,
