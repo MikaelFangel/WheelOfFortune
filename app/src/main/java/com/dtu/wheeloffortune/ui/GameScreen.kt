@@ -26,33 +26,9 @@ fun GameScreen(
 ) {
     val gameState by gameScreenViewModel.uiState.collectAsState()
     if (gameState.gameStatus == GameCycle.WON || gameState.gameStatus == GameCycle.LOST)
-        AlertDialog(
-            title = {
-                if (gameState.gameStatus == GameCycle.WON)
-                    Text(text = stringResource(id = R.string.game_won))
-                else
-                    Text(text = stringResource(id = R.string.game_lost))
-            },
-            text = {
-                Text(
-                    text =
-                    stringResource(id = R.string.your_score) + ": ${gameState.userScore}\n" +
-                            stringResource(id = R.string.the_cat) + ": ${gameState.currentCategory}\n" +
-                            stringResource(id = R.string.the_word) + ": ${gameState.currentWord}"
-                )
-            },
-            onDismissRequest = {},
-            dismissButton = {
-                OutlinedButton(onClick = { /*TODO*/ }) {
-                    Text(text = stringResource(id = R.string.end_game))
-                }
-            },
-            confirmButton = {
-                Button(onClick = { gameScreenViewModel.resetGame() }) {
-                    Text(text = stringResource(id = R.string.play_again))
-                }
-            }
-        )
+        GameEndedDialog(gameState = gameState) {
+            gameScreenViewModel.resetGame()
+        }
 
     Column {
         StatusLine(lives = gameState.remainingLives, score = gameState.userScore)
@@ -105,6 +81,38 @@ fun GameScreen(
 }
 
 @Composable
+fun GameEndedDialog(
+    gameState: GameScreenState,
+    playAgain: () -> Unit
+) = AlertDialog(
+    title = {
+        if (gameState.gameStatus == GameCycle.WON)
+            Text(text = stringResource(id = R.string.game_won))
+        else
+            Text(text = stringResource(id = R.string.game_lost))
+    },
+    text = {
+        Text(
+            text =
+            stringResource(id = R.string.your_score) + ": ${gameState.userScore}\n" +
+                    stringResource(id = R.string.the_cat) + ": ${gameState.currentCategory}\n" +
+                    stringResource(id = R.string.the_word) + ": ${gameState.currentWord}"
+        )
+    },
+    onDismissRequest = {},
+    dismissButton = {
+        OutlinedButton(onClick = { /*TODO*/ }) {
+            Text(text = stringResource(id = R.string.end_game))
+        }
+    },
+    confirmButton = {
+        Button(onClick = playAgain) {
+            Text(text = stringResource(id = R.string.play_again))
+        }
+    }
+)
+
+@Composable
 fun StatusLine(
     modifier: Modifier = Modifier,
     lives: Int,
@@ -147,9 +155,7 @@ fun UserLives(
 fun UserScore(
     modifier: Modifier = Modifier,
     score: Int
-) {
-    Text(text = stringResource(id = R.string.score) + ": $score")
-}
+) = Text(text = stringResource(id = R.string.score) + ": $score")
 
 @Composable
 fun Word(

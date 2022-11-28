@@ -5,7 +5,7 @@ val titleList = listOf(
     "Aladdin",
     "Top Gun",
     "Avatar",
-    "Bohemian Rapsody",
+    "Bohemian Rhapsody",
     "Harry Potter",
     "Dune",
     "The Lord of the Rings"
@@ -29,7 +29,6 @@ val animalList = listOf(
 )
 
 val placeList = listOf(
-    "Copenhagen",
     "Bruxelles",
     "Amsterdam",
     "Odense",
@@ -42,7 +41,6 @@ val nameList = listOf(
     "Kayne West",
     "Donald Trump",
     "Elon Musk",
-    "Mette Frederiksen",
     "Mads Mikkelsen",
 )
 
