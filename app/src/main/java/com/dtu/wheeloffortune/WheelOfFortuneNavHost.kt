@@ -1,6 +1,7 @@
 package com.dtu.wheeloffortune
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,6 +19,8 @@ enum class Screens(screen: String) {
 fun WheelOfFortuneNavHost(
     navController: NavHostController = rememberNavController(),
 ) {
+    val gameScreenViewModel = remember { GameScreenViewModel() }
+
     NavHost(
         navController = navController,
         startDestination = Screens.MainScreen.name
@@ -28,7 +31,7 @@ fun WheelOfFortuneNavHost(
             }
         }
         composable(Screens.GameScreen.name) {
-            GameScreen(gameScreenViewModel = GameScreenViewModel())
+            GameScreen(gameScreenViewModel = gameScreenViewModel)
         }
     }
 }

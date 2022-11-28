@@ -16,14 +16,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dtu.wheeloffortune.R
 import com.dtu.wheeloffortune.ui.theme.WheelOfFortuneTheme
 
 @Composable
 fun GameScreen(
     modifier: Modifier = Modifier,
-    gameScreenViewModel: GameScreenViewModel = viewModel(),
+    gameScreenViewModel: GameScreenViewModel,
 ) {
     val gameState by gameScreenViewModel.uiState.collectAsState()
     if (gameState.gameStatus == GameCycle.Won || gameState.gameStatus == GameCycle.Lost)
