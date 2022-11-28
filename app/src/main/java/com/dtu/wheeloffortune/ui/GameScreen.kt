@@ -1,5 +1,6 @@
 package com.dtu.wheeloffortune.ui
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
@@ -236,7 +237,19 @@ fun CharItem(
 @Preview(showBackground = true)
 @Composable
 fun GameScreenPreview() {
+    Surface() {
+        WheelOfFortuneTheme {
+            GameScreen(gameScreenViewModel = GameScreenViewModel()) {}
+        }
+    }
+}
+
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun GameScreenPreviewDarkMode() {
     WheelOfFortuneTheme {
-        GameScreen(gameScreenViewModel = GameScreenViewModel()) {}
+        Surface() {
+            GameScreen(gameScreenViewModel = GameScreenViewModel()) {}
+        }
     }
 }
