@@ -152,10 +152,8 @@ fun UserLives(
 }
 
 @Composable
-fun UserScore(
-    modifier: Modifier = Modifier,
-    score: Int
-) = Text(text = stringResource(id = R.string.score) + ": $score")
+fun UserScore(modifier: Modifier = Modifier, score: Int) =
+    Text(text = stringResource(id = R.string.score) + ": $score")
 
 @Composable
 fun Word(
