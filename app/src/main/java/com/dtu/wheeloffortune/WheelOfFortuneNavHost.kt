@@ -10,9 +10,9 @@ import com.dtu.wheeloffortune.ui.GameScreen
 import com.dtu.wheeloffortune.ui.GameScreenViewModel
 import com.dtu.wheeloffortune.ui.MainScreen
 
-enum class Screens(screen: String) {
-    MainScreen("Main Scree"),
-    GameScreen("Game Screen"),
+enum class Screens {
+    MAIN_SCREEN,
+    GAME_SCREEN,
 }
 
 @Composable
@@ -23,14 +23,14 @@ fun WheelOfFortuneNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = Screens.MainScreen.name
+        startDestination = Screens.MAIN_SCREEN.name
     ) {
-        composable(Screens.MainScreen.name) {
+        composable(Screens.MAIN_SCREEN.name) {
             MainScreen {
-                navController.navigate(Screens.GameScreen.name)
+                navController.navigate(Screens.GAME_SCREEN.name)
             }
         }
-        composable(Screens.GameScreen.name) {
+        composable(Screens.GAME_SCREEN.name) {
             GameScreen(gameScreenViewModel = gameScreenViewModel)
         }
     }
