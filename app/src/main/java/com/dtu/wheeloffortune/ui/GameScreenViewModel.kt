@@ -52,9 +52,9 @@ class GameScreenViewModel : ViewModel() {
                     userScore = uiState.value.userScore +
                             uiState.value.wheelScore * indexes.size,
                     gameStatus = if (checkIfGameWon(tempString.toString()))
-                        GameCycle.Won
+                        GameCycle.WON
                     else
-                        GameCycle.Spinning
+                        GameCycle.SPINNING
                 )
             }
         } else {
@@ -62,9 +62,9 @@ class GameScreenViewModel : ViewModel() {
                 state.copy(
                     remainingLives = uiState.value.remainingLives - 1,
                     gameStatus = if (checkIfGameLost())
-                        GameCycle.Lost
+                        GameCycle.LOST
                     else
-                        GameCycle.Spinning
+                        GameCycle.SPINNING
                 )
             }
         }
@@ -95,7 +95,7 @@ class GameScreenViewModel : ViewModel() {
         _uiState.update { state ->
             state.copy(
                 wheelScore = wheelValues.random(Random(System.currentTimeMillis())),
-                gameStatus = GameCycle.Guessing
+                gameStatus = GameCycle.GUESSING
             )
         }
     }

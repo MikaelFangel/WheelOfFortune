@@ -4,15 +4,15 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 
 enum class GameCycle() {
-    Spinning,
-    Guessing,
-    Won,
-    Lost
+    SPINNING,
+    GUESSING,
+    WON,
+    LOST
 }
 
 data class GameScreenState(
     val remainingLives: Int = 5,
-    val gameStatus: GameCycle = GameCycle.Guessing,
+    val gameStatus: GameCycle = GameCycle.GUESSING,
 
     val currentCategory: String = "",
     val currentWord: String = "",

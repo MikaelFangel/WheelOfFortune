@@ -25,10 +25,10 @@ fun GameScreen(
     gameScreenViewModel: GameScreenViewModel,
 ) {
     val gameState by gameScreenViewModel.uiState.collectAsState()
-    if (gameState.gameStatus == GameCycle.Won || gameState.gameStatus == GameCycle.Lost)
+    if (gameState.gameStatus == GameCycle.WON || gameState.gameStatus == GameCycle.LOST)
         AlertDialog(
             title = {
-                if (gameState.gameStatus == GameCycle.Won)
+                if (gameState.gameStatus == GameCycle.WON)
                     Text(text = stringResource(id = R.string.game_won))
                 else
                     Text(text = stringResource(id = R.string.game_lost))
@@ -88,14 +88,14 @@ fun GameScreen(
                 ) {
                     Button(
                         onClick = { gameScreenViewModel.spinWheel() },
-                        enabled = gameState.gameStatus == GameCycle.Spinning
+                        enabled = gameState.gameStatus == GameCycle.SPINNING
                     ) {
                         Text(text = stringResource(id = R.string.spin_wheel))
                     }
                 }
                 Keys(
                     keys = gameState.isKeyGuessed,
-                    enabled = gameState.gameStatus == GameCycle.Guessing
+                    enabled = gameState.gameStatus == GameCycle.GUESSING
                 ) {
                     gameScreenViewModel.keyPress(it)
                 }
