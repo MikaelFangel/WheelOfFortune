@@ -2,6 +2,7 @@ package com.dtu.wheeloffortune.ui
 
 import androidx.lifecycle.ViewModel
 import com.dtu.wheeloffortune.data.categories
+import com.dtu.wheeloffortune.data.wheelValues
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -90,9 +91,6 @@ class GameScreenViewModel : ViewModel() {
     }
 
     fun spinWheel() {
-        val wheelValues =
-            listOf(3000, 1250, 800, 500, 500, 500, 500, 100, 800, 800, 1000, 1500, 600, 0, 0)
-
         val letterValue = wheelValues.random(Random(System.currentTimeMillis()))
         _uiState.update { state ->
             state.copy(
