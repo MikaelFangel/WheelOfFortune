@@ -1,4 +1,4 @@
-package com.dtu.wheeloffortune.ui
+package com.dtu.wheeloffortune.data
 
 val titleList = listOf(
     "Frost",

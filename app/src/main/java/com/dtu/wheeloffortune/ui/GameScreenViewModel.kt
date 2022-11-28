@@ -1,6 +1,7 @@
 package com.dtu.wheeloffortune.ui
 
 import androidx.lifecycle.ViewModel
+import com.dtu.wheeloffortune.data.categories
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
