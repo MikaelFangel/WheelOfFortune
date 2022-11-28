@@ -15,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.res.ResourcesCompat
 import com.dtu.wheeloffortune.R
 import com.dtu.wheeloffortune.ui.theme.WheelOfFortuneTheme
 
