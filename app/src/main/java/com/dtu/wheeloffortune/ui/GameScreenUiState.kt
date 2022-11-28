@@ -10,7 +10,7 @@ enum class GameCycle() {
     LOST
 }
 
-data class GameScreenState(
+data class GameScreenUiState(
     val remainingLives: Int = 5,
     val gameStatus: GameCycle = GameCycle.GUESSING,
 

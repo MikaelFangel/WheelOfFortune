@@ -88,7 +88,7 @@ fun GameScreen(
 
 @Composable
 fun GameEndedDialog(
-    gameState: GameScreenState,
+    gameState: GameScreenUiState,
     finishApp: () -> Unit,
     playAgain: () -> Unit
 ) = AlertDialog(

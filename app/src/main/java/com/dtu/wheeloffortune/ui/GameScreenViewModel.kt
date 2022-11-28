@@ -10,8 +10,8 @@ import java.util.*
 import kotlin.random.Random
 
 class GameScreenViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow(GameScreenState())
-    val uiState: StateFlow<GameScreenState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(GameScreenUiState())
+    val uiState: StateFlow<GameScreenUiState> = _uiState.asStateFlow()
 
     init {
         resetGame()
@@ -106,7 +106,7 @@ class GameScreenViewModel : ViewModel() {
     fun resetGame() {
         val catTemp = getRandomCategory()
         val randomWordTemp = getRandomWord(catTemp)
-        _uiState.value = GameScreenState(
+        _uiState.value = GameScreenUiState(
             currentCategory = catTemp,
             currentWord = randomWordTemp,
             guessedWord = getCurrentWordAsBlanks(randomWordTemp),
