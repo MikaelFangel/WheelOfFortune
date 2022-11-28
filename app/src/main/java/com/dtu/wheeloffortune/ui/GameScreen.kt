@@ -23,10 +23,11 @@ import com.dtu.wheeloffortune.ui.theme.WheelOfFortuneTheme
 fun GameScreen(
     modifier: Modifier = Modifier,
     gameScreenViewModel: GameScreenViewModel,
+    finishApp: () -> Unit
 ) {
     val gameState by gameScreenViewModel.uiState.collectAsState()
     if (gameState.gameStatus == GameCycle.WON || gameState.gameStatus == GameCycle.LOST)
-        GameEndedDialog(gameState = gameState) {
+        GameEndedDialog(gameState = gameState, finishApp = { finishApp() }) {
             gameScreenViewModel.resetGame()
         }
 
@@ -87,6 +88,7 @@ fun GameScreen(
 @Composable
 fun GameEndedDialog(
     gameState: GameScreenState,
+    finishApp: () -> Unit,
     playAgain: () -> Unit
 ) = AlertDialog(
     title = {
@@ -105,7 +107,7 @@ fun GameEndedDialog(
     },
     onDismissRequest = {},
     dismissButton = {
-        OutlinedButton(onClick = { /*TODO*/ }) {
+        OutlinedButton(onClick = { finishApp() }) {
             Text(text = stringResource(id = R.string.end_game))
         }
     },
@@ -234,7 +236,7 @@ fun CharItem(
 @Preview(showBackground = true)
 @Composable
 fun GameScreenPreview() {
-    WheelOfFortuneTheme() {
-        GameScreen(gameScreenViewModel = GameScreenViewModel())
+    WheelOfFortuneTheme {
+        GameScreen(gameScreenViewModel = GameScreenViewModel()) {}
     }
 }

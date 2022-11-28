@@ -18,6 +18,7 @@ enum class Screens {
 @Composable
 fun WheelOfFortuneNavHost(
     navController: NavHostController = rememberNavController(),
+    finishApp: () -> Unit
 ) {
     val gameScreenViewModel = remember { GameScreenViewModel() }
 
@@ -31,7 +32,9 @@ fun WheelOfFortuneNavHost(
             }
         }
         composable(Screens.GAME_SCREEN.name) {
-            GameScreen(gameScreenViewModel = gameScreenViewModel)
+            GameScreen(gameScreenViewModel = gameScreenViewModel) {
+                finishApp()
+            }
         }
     }
 }
