@@ -1,18 +1,17 @@
 package com.dtu.wheeloffortune.ui
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.dtu.wheeloffortune.data.categories
 import com.dtu.wheeloffortune.data.wheelValues
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import java.util.*
 import kotlin.random.Random
 
 class GameScreenViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow(GameScreenUiState())
-    val uiState: StateFlow<GameScreenUiState> = _uiState.asStateFlow()
+    var uiState by mutableStateOf(GameScreenUiState())
+        private set
 
     init {
         resetGame()
@@ -20,7 +19,7 @@ class GameScreenViewModel : ViewModel() {
 
     private fun initializeKeys() {
         for (c in 'a'..'z')
-            _uiState.value.isKeyGuessed[c] = true
+            uiState.isKeyGuessed[c] = true
     }
 
     private fun getRandomCategory(): String {
@@ -40,50 +39,46 @@ class GameScreenViewModel : ViewModel() {
     }
 
     fun keyPress(c: Char) {
-        _uiState.value.isKeyGuessed[c] = false
+        uiState.isKeyGuessed[c] = false
 
         val indexes = getIndexesOfLetters(c)
         if (indexes.isNotEmpty()) {
-            val tempString = StringBuilder(uiState.value.guessedWord)
+            val tempString = StringBuilder(uiState.guessedWord)
             for (i in indexes)
                 tempString[i] = c
 
-            _uiState.update { wordState ->
-                wordState.copy(
-                    guessedWord = tempString.toString(),
-                    userScore = uiState.value.userScore +
-                            uiState.value.wheelScore * indexes.size,
-                    gameStatus = if (checkIfGameWon(tempString.toString()))
-                        GameCycle.WON
-                    else
-                        GameCycle.SPINNING
-                )
-            }
+            uiState = uiState.copy(
+                guessedWord = tempString.toString(),
+                userScore = uiState.userScore +
+                        uiState.wheelScore * indexes.size,
+                gameStatus = if (checkIfGameWon(tempString.toString()))
+                    GameCycle.WON
+                else
+                    GameCycle.SPINNING
+            )
         } else {
-            _uiState.update { state ->
-                state.copy(
-                    remainingLives = uiState.value.remainingLives - 1,
-                    gameStatus = if (checkIfGameLost())
-                        GameCycle.LOST
-                    else
-                        GameCycle.SPINNING
-                )
-            }
+            uiState = uiState.copy(
+                remainingLives = uiState.remainingLives - 1,
+                gameStatus = if (checkIfGameLost())
+                    GameCycle.LOST
+                else
+                    GameCycle.SPINNING
+            )
         }
     }
 
     private fun checkIfGameLost(): Boolean {
-        return uiState.value.remainingLives <= 1
+        return uiState.remainingLives <= 1
     }
 
     private fun checkIfGameWon(guessedWord: String): Boolean {
-        return uiState.value.currentWord
+        return uiState.currentWord
             .lowercase(Locale.getDefault())
             .replace(" ", "_") == guessedWord.lowercase(Locale.getDefault())
     }
 
     private fun getIndexesOfLetters(c: Char): List<Int> {
-        return uiState.value.currentWord
+        return uiState.currentWord
             .lowercase()
             .withIndex()
             .filter { it.value == c }
@@ -92,19 +87,17 @@ class GameScreenViewModel : ViewModel() {
 
     fun spinWheel() {
         val letterValue = wheelValues.random(Random(System.currentTimeMillis()))
-        _uiState.update { state ->
-            state.copy(
-                wheelScore = letterValue,
-                gameStatus = if (letterValue == 0) GameCycle.SPINNING else GameCycle.GUESSING,
-                userScore = if (letterValue == 0) 0 else uiState.value.userScore
-            )
-        }
+        uiState = uiState.copy(
+            wheelScore = letterValue,
+            gameStatus = if (letterValue == 0) GameCycle.SPINNING else GameCycle.GUESSING,
+            userScore = if (letterValue == 0) 0 else uiState.userScore
+        )
     }
 
     fun resetGame() {
         val catTemp = getRandomCategory()
         val randomWordTemp = getRandomWord(catTemp)
-        _uiState.value = GameScreenUiState(
+        uiState = uiState.copy(
             currentCategory = catTemp,
             currentWord = randomWordTemp,
             guessedWord = getCurrentWordAsBlanks(randomWordTemp),

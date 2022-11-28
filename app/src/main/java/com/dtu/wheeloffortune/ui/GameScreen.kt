@@ -7,8 +7,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +24,7 @@ fun GameScreen(
     gameScreenViewModel: GameScreenViewModel,
     finishApp: () -> Unit
 ) {
-    val gameState by gameScreenViewModel.uiState.collectAsState()
+    val gameState = gameScreenViewModel.uiState
     if (gameState.gameStatus == GameCycle.WON || gameState.gameStatus == GameCycle.LOST)
         GameEndedDialog(gameState = gameState, finishApp = { finishApp() }) {
             gameScreenViewModel.resetGame()
