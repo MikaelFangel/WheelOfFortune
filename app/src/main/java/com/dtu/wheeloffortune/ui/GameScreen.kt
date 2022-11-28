@@ -47,8 +47,12 @@ fun GameScreen(
         Word(guessedWord = gameState.guessedWord)
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Text(
-                text = stringResource(id = R.string.current_letter_value) +
-                        ": ${gameState.wheelScore}"
+                text = stringResource(
+                    id = if (gameState.wheelScore != 0)
+                        R.string.current_letter_value
+                    else
+                        R.string.bankrupt
+                ) + ": ${gameState.wheelScore}"
             )
         }
         Box(

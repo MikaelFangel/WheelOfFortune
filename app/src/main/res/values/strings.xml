@@ -14,4 +14,5 @@
     <string name="the_word">The word was</string>
     <string name="end_game">End Game</string>
     <string name="play_again">Play Again</string>
+    <string name="bankrupt">You have gone bankrupt\nYour score is now</string>
 </resources>
