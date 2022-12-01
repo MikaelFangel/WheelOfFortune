@@ -93,7 +93,9 @@ class GameScreenViewModel(
             currentCategory = catTemp,
             currentWord = randomWordTemp,
             guessedWord = getCurrentWordAsBlanks(randomWordTemp),
+            gameStatus = GameCycle.GUESSING,
             remainingLives = 5,
+            userScore = 0
         )
         spinWheel()
         initializeKeys()
