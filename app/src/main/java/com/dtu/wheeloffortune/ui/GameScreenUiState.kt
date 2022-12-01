@@ -3,7 +3,7 @@ package com.dtu.wheeloffortune.ui
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 
-enum class GameCycle() {
+enum class GameCycle {
     SPINNING,
     GUESSING,
     WON,
