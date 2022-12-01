@@ -6,6 +6,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.dtu.wheeloffortune.data.WheelValuesLocalDataSource
+import com.dtu.wheeloffortune.data.WheelValuesRepository
+import com.dtu.wheeloffortune.data.WordsLocalDataSource
+import com.dtu.wheeloffortune.data.WordsRepository
 import com.dtu.wheeloffortune.ui.GameScreen
 import com.dtu.wheeloffortune.ui.GameScreenViewModel
 import com.dtu.wheeloffortune.ui.MainScreen
@@ -20,7 +24,14 @@ fun WheelOfFortuneNavHost(
     navController: NavHostController = rememberNavController(),
     finishApp: () -> Unit
 ) {
-    val gameScreenViewModel = remember { GameScreenViewModel() }
+    val gameScreenViewModel = remember {
+        GameScreenViewModel(
+            wheelValuesRepository = WheelValuesRepository(
+                WheelValuesLocalDataSource()
+            ),
+            wordsRepository = WordsRepository(wordsLocalDataSource = WordsLocalDataSource())
+        )
+    }
 
     NavHost(
         navController = navController,

@@ -16,6 +16,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dtu.wheeloffortune.R
+import com.dtu.wheeloffortune.data.WheelValuesLocalDataSource
+import com.dtu.wheeloffortune.data.WheelValuesRepository
+import com.dtu.wheeloffortune.data.WordsLocalDataSource
+import com.dtu.wheeloffortune.data.WordsRepository
 import com.dtu.wheeloffortune.ui.theme.WheelOfFortuneTheme
 
 @Composable
@@ -235,9 +239,16 @@ fun CharItem(
 @Preview(showBackground = true)
 @Composable
 fun GameScreenPreview() {
-    Surface() {
+    Surface {
         WheelOfFortuneTheme {
-            GameScreen(gameScreenViewModel = GameScreenViewModel()) {}
+            GameScreen(
+                gameScreenViewModel = GameScreenViewModel(
+                    WordsRepository(
+                        WordsLocalDataSource()
+                    ),
+                    wheelValuesRepository = WheelValuesRepository(WheelValuesLocalDataSource())
+                )
+            ) {}
         }
     }
 }
@@ -246,8 +257,15 @@ fun GameScreenPreview() {
 @Composable
 fun GameScreenPreviewDarkMode() {
     WheelOfFortuneTheme {
-        Surface() {
-            GameScreen(gameScreenViewModel = GameScreenViewModel()) {}
+        Surface {
+            GameScreen(
+                gameScreenViewModel = GameScreenViewModel(
+                    WordsRepository(
+                        WordsLocalDataSource()
+                    ),
+                    wheelValuesRepository = WheelValuesRepository(WheelValuesLocalDataSource())
+                )
+            ) {}
         }
     }
 }

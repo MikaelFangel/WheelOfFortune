@@ -4,12 +4,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.dtu.wheeloffortune.data.categories
-import com.dtu.wheeloffortune.data.wheelValues
+import com.dtu.wheeloffortune.data.WheelValuesRepository
+import com.dtu.wheeloffortune.data.WordsRepository
 import java.util.*
-import kotlin.random.Random
 
-class GameScreenViewModel : ViewModel() {
+class GameScreenViewModel(
+    private val wordsRepository: WordsRepository,
+    private val wheelValuesRepository: WheelValuesRepository
+) : ViewModel() {
     var uiState by mutableStateOf(GameScreenUiState())
         private set
 
@@ -20,16 +22,6 @@ class GameScreenViewModel : ViewModel() {
     private fun initializeKeys() {
         for (c in 'a'..'z')
             uiState.isKeyGuessed[c] = true
-    }
-
-    private fun getRandomCategory(): String {
-        val cats = categories.keys.toList()
-        return cats.random(Random(System.currentTimeMillis()))
-    }
-
-    private fun getRandomWord(category: String): String {
-        val words = categories[category]
-        return words?.random(Random(System.currentTimeMillis())).toString()
     }
 
     private fun getCurrentWordAsBlanks(word: String): String {
@@ -86,7 +78,7 @@ class GameScreenViewModel : ViewModel() {
     }
 
     fun spinWheel() {
-        val letterValue = wheelValues.random(Random(System.currentTimeMillis()))
+        val letterValue = wheelValuesRepository.getRandomWheelValue()
         uiState = uiState.copy(
             wheelScore = letterValue,
             gameStatus = if (letterValue == 0) GameCycle.SPINNING else GameCycle.GUESSING,
@@ -95,8 +87,8 @@ class GameScreenViewModel : ViewModel() {
     }
 
     fun resetGame() {
-        val catTemp = getRandomCategory()
-        val randomWordTemp = getRandomWord(catTemp)
+        val catTemp = wordsRepository.getRandomCategory()
+        val randomWordTemp = wordsRepository.getRandomWordFromCategory(catTemp)
         uiState = uiState.copy(
             currentCategory = catTemp,
             currentWord = randomWordTemp,
