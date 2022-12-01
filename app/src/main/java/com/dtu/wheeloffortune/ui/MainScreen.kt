@@ -16,6 +16,10 @@ import androidx.compose.ui.unit.dp
 import com.dtu.wheeloffortune.R
 import com.dtu.wheeloffortune.ui.theme.WheelOfFortuneTheme
 
+/**
+ * Show the starting screen of the application
+ * @param startGame what should happen when the start game button has been clicked
+ */
 @Composable
 fun MainScreen(
     startGame: () -> Unit

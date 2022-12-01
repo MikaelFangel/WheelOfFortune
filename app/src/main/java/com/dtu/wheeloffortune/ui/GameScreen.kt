@@ -22,18 +22,27 @@ import com.dtu.wheeloffortune.data.WordsLocalDataSource
 import com.dtu.wheeloffortune.data.WordsRepository
 import com.dtu.wheeloffortune.ui.theme.WheelOfFortuneTheme
 
+/**
+ * Shows the game screen
+ * @param gameScreenViewModel the view model used to keep track of the game state
+ * @param finishApp what should happen if the user pressed the end game button
+ */
 @Composable
 fun GameScreen(
     modifier: Modifier = Modifier,
     gameScreenViewModel: GameScreenViewModel,
     finishApp: () -> Unit
 ) {
+    // Immutable state of the game
     val gameState = gameScreenViewModel.uiState
+
+    // Check if the game is won of lost on each recompose
     if (gameState.gameStatus == GameCycle.WON || gameState.gameStatus == GameCycle.LOST)
         GameEndedDialog(gameState = gameState, finishApp = { finishApp() }) {
             gameScreenViewModel.resetGame()
         }
 
+    //  Layout of the screen
     Column {
         StatusLine(lives = gameState.remainingLives, score = gameState.userScore)
         Spacer(modifier = modifier.padding(20.dp))
@@ -88,6 +97,12 @@ fun GameScreen(
     }
 }
 
+/**
+ * Shows a dialog when the game has ended
+ * @param gameState the current state of the app
+ * @param finishApp action to happen on end game
+ * @param playAgain action to happen of play again
+ */
 @Composable
 fun GameEndedDialog(
     gameState: GameScreenUiState,
@@ -121,6 +136,11 @@ fun GameEndedDialog(
     }
 )
 
+/**
+ * Show a line on top of the screen with the lives and score of the user
+ * @param lives the lives the user has left
+ * @param score the current score of the user
+ */
 @Composable
 fun StatusLine(
     modifier: Modifier = Modifier,
@@ -145,6 +165,10 @@ fun StatusLine(
     }
 }
 
+/**
+ * Show the amount of lives left for the user
+ * @param lives the lives the user has left
+ */
 @Composable
 fun UserLives(
     modifier: Modifier = Modifier,
@@ -160,10 +184,19 @@ fun UserLives(
     }
 }
 
+/**
+ * Show the current user score
+ * @param score the current score of the user
+ */
 @Composable
 fun UserScore(modifier: Modifier = Modifier, score: Int) =
     Text(text = stringResource(id = R.string.score) + ": $score")
 
+/**
+ * Show the word on the screen as buttons. The word is split on underscores which is used to
+ * represent spaces and to show it nicely on the screen each spaces is treated as a newline.
+ * @param guessedWord the current status of the word the user is guessing on
+ */
 @Composable
 fun Word(
     modifier: Modifier = Modifier,
@@ -171,6 +204,7 @@ fun Word(
 ) {
     val lines = guessedWord.split("_")
 
+    // Make a row each time a space is encounter
     for (line in lines) {
         Row(
             modifier = Modifier
@@ -183,6 +217,12 @@ fun Word(
     }
 }
 
+/**
+ * Shows the keyboard on the screen.
+ * @param keys the current state of the keyboard
+ * @param enabled if the key is pressable or not
+ * @param onGuess what should happen when the key is pressed
+ */
 @Composable
 fun Keys(
     modifier: Modifier = Modifier,
@@ -210,6 +250,12 @@ fun Keys(
     }
 }
 
+/**
+ * Show a small button that fits on letter on the screen with default spacing in between.
+ * @param c the char to show on the button
+ * @param enabled if the button is pressable
+ * @param onGuess what should happen on key-press
+ */
 @Composable
 fun CharItem(
     modifier: Modifier = Modifier,
