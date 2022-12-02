@@ -7,6 +7,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,7 +36,7 @@ fun GameScreen(
     finishApp: () -> Unit
 ) {
     // Immutable state of the game
-    val gameState = gameScreenViewModel.uiState
+    val gameState by gameScreenViewModel.uiState.collectAsState()
 
     // Check if the game is won of lost on each recompose
     if (gameState.gameStatus == GameCycle.WON || gameState.gameStatus == GameCycle.LOST)
